@@ -39,7 +39,7 @@ jobs:
       run: uv pip install -r docs/reqs.txt
 
     - name: Install package
-      run: uv pip install --no-build-isolation --no-deps .[docs]
+      run: uv pip install --no-build-isolation .
 
     - run: python -VV
 
