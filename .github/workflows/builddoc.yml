@@ -37,12 +37,12 @@ jobs:
         version: latest
         enable-cache: false
 
+    - name: Install dependencies
+      run: uv pip install .[docs,all]
+
     - run: python -VV
 
     - run: python -m sphinx --version
-
-    - name: Install dependencies
-      run: uv pip install .[docs,all]
 
     - name: Render the documentation
       run: >
