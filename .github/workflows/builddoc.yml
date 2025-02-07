@@ -48,7 +48,7 @@ jobs:
     - name: Render the documentation
       run: >
         python -m sphinx build
-        -M html ./docs/conf.py ./docs/build/
+        -M html ./docs ./docs/build
         --jobs=auto
         --show-traceback
         --fail-on-warning
