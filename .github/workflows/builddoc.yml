@@ -30,6 +30,8 @@ jobs:
     - uses: mamba-org/setup-micromamba@v2
       with:
         environment-file: docs/rtd_environment.yaml
+        cache-environment: true
+        post-cleanup: 'all'
 
     - name: Install uv
       uses: astral-sh/setup-uv@v5
