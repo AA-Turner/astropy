@@ -30,7 +30,10 @@ jobs:
         post-cleanup: 'all'
 
     - name: Install dependencies
-      run: python -m pip install --upgrade --upgrade-strategy only-if-needed --no-cache-dir .[docs,all]
+      run: python -m pip install --upgrade --upgrade-strategy only-if-needed --no-cache-dir -r docs/reqs.txt
+
+    - name: Install package
+      run: python -m pip install --upgrade --upgrade-strategy only-if-needed --no-cache-dir .[docs]
 
     - run: python -VV
 
