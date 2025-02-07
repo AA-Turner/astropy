@@ -15,19 +15,16 @@ env:
 jobs:
   render:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash -leo pipefail {0}
+
     steps:
     - uses: actions/checkout@v4
       with:
         persist-credentials: false
 
-    - uses: mamba-org/setup-micromamba@v2
+    - name: Set up Python
+      uses: actions/setup-python@v5
       with:
-        environment-file: docs/rtd_environment.yaml
-        cache-environment: true
-        post-cleanup: 'all'
+        python-version: "3.13"
 
     - name: Install uv
       uses: astral-sh/setup-uv@v5
@@ -35,23 +32,16 @@ jobs:
         version: latest
         enable-cache: false
 
-    - name: Install dependencies
-      run: uv pip install -r docs/reqs.txt
+    - name: Install language-pack-de and tzdata
+      run: |
+        sudo apt-get update
+        sudo apt-get install language-pack-de tzdata
 
-    - name: Install package
-      run: uv pip install --no-build-isolation .
+    - name: Install Python dependencies
+      run: uv pip install --upgrade tox
 
-    - run: python -VV
-
-    - run: python -m sphinx --version
-
-    - name: Render the documentation
-      run: >
-        python -m sphinx build
-        -M html ./docs ./docs/build
-        --jobs=auto
-        --show-traceback
-        --fail-on-warning
+    - name: Run tests
+      run: tox -e build_docs
 
     - uses: actions/upload-artifact@v4
       if: always()
