@@ -24,7 +24,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: "3.13"
+        python-version: "3.12"
 
     - name: Install uv
       uses: astral-sh/setup-uv@v5
@@ -37,11 +37,9 @@ jobs:
         sudo apt-get update
         sudo apt-get install language-pack-de tzdata
 
-    - name: Install Python dependencies
-      run: uv pip install --upgrade tox
+    - run: uv pip install --upgrade tox
 
-    - name: Run tests
-      run: tox -e build_docs
+    - run: tox -e build_docs
 
     - uses: actions/upload-artifact@v4
       if: always()
